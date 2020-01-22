@@ -1,10 +1,13 @@
 1. Reverse the String
+
 a="Accenture"
 c= len(a)
 for i in range(c-1,-1,-1):
     print(a[i])
+    
 ---------------------------------------------
 2.Swap Case
+
 I.
 a="AcCenTure"
 print(a.swapcase())
@@ -24,6 +27,7 @@ print(word.join(l))
 
 --------------------------------------------------
 3.Count the occurences of a character and store in dictionary
+
 str="accenture"
 d={}
 for i in str:
@@ -33,8 +37,10 @@ for i in str:
         d [i]= 1
 
 print(d)
+
 ------------------------------------------------------
 4.Even and odd list
+
 list=[]
 for i in range(1,51):
     list.append(i)
@@ -50,6 +56,7 @@ print(even_list)
 print(odd_list)
 -------------------------------------------------------
 5.div by 3 and 5
+
 list=[]
 for i in range(1,51):
     list.append(i)
@@ -72,8 +79,10 @@ for i in s1:
     if (i=="a" or i=="e" or i=="i" or i=="o" or i=="u"  ):
         print(s.count(i),end="")
         print(i,end="")
+
 ------------------------------------------------------
 7.word="ga24nbv2k6jg523jg2545lsfwe"
+
 list=[]
 sum=0
 for i in word:
@@ -84,6 +93,7 @@ for i in word:
 print(sum, list)
 ---------------------------------------------------
 8.sum is 9
+
 list=[]
 for i in range(1,11):
     list.append(i)
@@ -94,6 +104,7 @@ for i in range(0,a):
             print(list[i],list[j])
 ---------------------------------------------------
 9.Anagram
+
 a = "add"
 b = "dad"
 if(sorted(a)==sorted(b)):
@@ -102,6 +113,7 @@ else:
     print("not anagram")
 --------------------------------------------------
 10.prime or not prime
+
 a = 30
 flag=0
 for i in range(2,int(a/2)):
@@ -120,12 +132,15 @@ print(l1)
 
 -------------------------------------------------
 11.tuple
+
 tup=(1,2,3,4,5)
 new=list(tup)
 new.append("a")
 print(tuple(new))
+
 --------------------------------------------------
 12.Palidrome
+
 str = input()
 rev = str[::-1]
 if str == rev:
@@ -134,11 +149,13 @@ else:
     print("it is not palindrome ")
 ---------------------------------------------------
 13.print table
+
 a=int(input("enter the number"))
 for i in range(1,11):
     print(a*i)
 ------------------------------------------------
 14.Fibonacci
+
 a=0
 b=1
 c=0
@@ -149,6 +166,7 @@ while(c<=50):
     b=c
 -----------------------------------------------
 15.hypenated string
+
 string=input()
 a=string.split("-")
 a.sort()
@@ -160,8 +178,10 @@ for i in range(0,len(a)):
     else:
         str1=str1+a[i]
 print(str1)
+
 -------------------------------------------------
 16.unique list
+
 list = [1,2,3,3,3,3,4,5]
 list1 = []
 for i in list:
@@ -171,6 +191,7 @@ for i in list:
 print(list1)
 ---------------------------------------------------
 17.pangram
+
 I.
 s="The quick brown fox jumps over the lazy dog"
 s1=list(s)
@@ -202,6 +223,7 @@ else:
 
 --------------------------------------------------
 18.odd
+
 a=[]
 for i in range(0,5):
     n=int(input("enter number"))
@@ -214,13 +236,17 @@ for i in range(0,5):
         break
 else:
     print("no odd numbers")
+
 -----------------------------------------------
 19.area of circle
+
 radius = int(input())
 area = 3.14*radius*radius
 print(area) 
+
 ----------------------------------------------
 20.factorial
+
 n = 7
 fact = 1
 if n < 0:
