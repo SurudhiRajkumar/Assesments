@@ -1,0 +1,234 @@
+1. Reverse the String
+a="Accenture"
+c= len(a)
+for i in range(c-1,-1,-1):
+    print(a[i])
+---------------------------------------------
+2.Swap Case
+I.
+a="AcCenTure"
+print(a.swapcase())
+
+II.
+s= "aCCenTure"
+l= []
+for i in s: 
+    if i.isupper():
+        l.append(i.lower())
+    elif i.islower():
+        l.append(i.upper())
+    else:
+        l.append(i)
+word = ''
+print(word.join(l))
+
+--------------------------------------------------
+3.Count the occurences of a character and store in dictionary
+str="accenture"
+d={}
+for i in str:
+    if i in d:
+        d[i] +=1
+    else:
+        d [i]= 1
+
+print(d)
+------------------------------------------------------
+4.Even and odd list
+list=[]
+for i in range(1,51):
+    list.append(i)
+print(list)
+odd_list=[]
+even_list=[]
+for i in list:
+    if i%2 ==0:
+        even_list.append(i)
+    else:
+        odd_list.append(i)
+print(even_list)
+print(odd_list)
+-------------------------------------------------------
+5.div by 3 and 5
+list=[]
+for i in range(1,51):
+    list.append(i)
+print(list)
+for i in list:
+    if i%3==0 and i%5==0:
+        print("fizz-buzz")
+    elif i%3==0:
+        print("fizz")
+    elif i%5==0:
+        print("buzz")
+    else:
+        print(i)
+------------------------------------------------------
+6.print count of vowels
+
+s="accenture"
+s1=set(s)
+for i in s1:
+    if (i=="a" or i=="e" or i=="i" or i=="o" or i=="u"  ):
+        print(s.count(i),end="")
+        print(i,end="")
+------------------------------------------------------
+7.word="ga24nbv2k6jg523jg2545lsfwe"
+list=[]
+sum=0
+for i in word:
+    if i.isdigit():
+        sum=sum+int(i)
+    else:
+        list.append(i)
+print(sum, list)
+---------------------------------------------------
+8.sum is 9
+list=[]
+for i in range(1,11):
+    list.append(i)
+a=len(list)
+for i in range(0,a):
+    for j in range(0,a):
+        if list[i]+list[j]==9:
+            print(list[i],list[j])
+---------------------------------------------------
+9.Anagram
+a = "add"
+b = "dad"
+if(sorted(a)==sorted(b)):
+    print("anagram" )
+else:
+    print("not anagram")
+--------------------------------------------------
+10.prime or not prime
+a = 30
+flag=0
+for i in range(2,int(a/2)):
+    if a%i == 0:
+        flag=1
+        print("not prime")
+        break
+else:
+    print(" prime")
+l1=[]    
+if flag==1:
+    for i in range(1,int(a)):
+        if a%i==0:
+            l1.append(int(a/i))
+print(l1)
+
+-------------------------------------------------
+11.tuple
+tup=(1,2,3,4,5)
+new=list(tup)
+new.append("a")
+print(tuple(new))
+--------------------------------------------------
+12.Palidrome
+str = input()
+rev = str[::-1]
+if str == rev:
+    print("it is palindrome " )
+else:
+    print("it is not palindrome ")
+---------------------------------------------------
+13.print table
+a=int(input("enter the number"))
+for i in range(1,11):
+    print(a*i)
+------------------------------------------------
+14.Fibonacci
+a=0
+b=1
+c=0
+while(c<=50):
+    print(c)
+    c=a+b
+    a=b
+    b=c
+-----------------------------------------------
+15.hypenated string
+string=input()
+a=string.split("-")
+a.sort()
+print(a)
+str1=""
+for i in range(0,len(a)):
+    if i!=len(a)-1:
+        str1=str1+a[i]+"-"
+    else:
+        str1=str1+a[i]
+print(str1)
+-------------------------------------------------
+16.unique list
+list = [1,2,3,3,3,3,4,5]
+list1 = []
+for i in list:
+    if i not in list1:
+        list1.append(i)
+        
+print(list1)
+---------------------------------------------------
+17.pangram
+I.
+s="The quick brown fox jumps over the lazy dog"
+s1=list(s)
+a="abcdefghijklmnopqrstuvwxyz"
+a1=list(a)
+flag=0
+for i in a1:
+    if i not in s1:
+        flag=1
+        print ("not a pangram")
+        break
+    else:
+        continue
+if flag==0:
+    print("it is a pangram")
+
+II.
+s="The quick brown fox jumps over the lazy dog"
+s1=list(s)
+a="abcdefghijklmnopqrstuvwxyz"
+a1=list(a)
+
+for i in a1:
+    if i not in s1:
+        print ("not a pangram")
+        break
+else:
+    print("it is a pangram")
+
+--------------------------------------------------
+18.odd
+a=[]
+for i in range(0,5):
+    n=int(input("enter number"))
+    a.append(n)
+a.sort(reverse= True)
+print(a)
+for i in range(0,5):
+    if a[i] %2 != 0:
+        print(a[i])
+        break
+else:
+    print("no odd numbers")
+-----------------------------------------------
+19.area of circle
+radius = int(input())
+area = 3.14*radius*radius
+print(area) 
+----------------------------------------------
+20.factorial
+n = 7
+fact = 1
+if n < 0:
+   print("not possible")
+elif n == 0:
+   print("The factorial of 0 is 1")
+else:
+   for i in range(1,n + 1):
+       fact = fact*i
+   print("The factorial of",n,"is",fact)  
+-------------------------------------------------
