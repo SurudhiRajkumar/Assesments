@@ -1,0 +1,169 @@
+1.
+select h.*,r.room_no,r.type,r.price from hotel h join room r on h.hotel_no=r.hotel_no ;
++----------+------------------+----------+---------+------+-------+
+| Hotel_No | name             | city     | room_no | type | price |
++----------+------------------+----------+---------+------+-------+
+| H111     | Empire Hotel     | New York | 313     | S    |   145 |
+| H111     | Empire Hotel     | New York | 412     | N    |   145 |
+| H235     | Park place       | New York | 1267    | N    |   175 |
+| H235     | Park place       | New York | 1289    | N    |   195 |
+| H432     | Brownstone Hotel | Toronto  | 876     | S    |   124 |
+| H432     | Brownstone Hotel | Toronto  | 898     | S    |   124 |
+| H498     | James Plaza      | Toronto  | 345     | N    |   160 |
+| H498     | James Plaza      | Toronto  | 467     | N    |   180 |
+| H193     | Devon Hotel      | Boston   | 1001    | S    |   150 |
+| H193     | Devon Hotel      | Boston   | 1201    | N    |   175 |
+| H437     | Clairmont Hotel  | Boston   | 257     | N    |   140 |
+| H437     | Clairmont Hotel  | Boston   | 223     | N    |   155 |
++----------+------------------+----------+---------+------+-------+
+
+2.
+ select h.*,r.room_no,r.type,r.price from hotel h join room r on h.hotel_no=r.hotel_no  where h.city="NEW YORK";
++----------+--------------+----------+---------+------+-------+
+| Hotel_No | name         | city     | room_no | type | price |
++----------+--------------+----------+---------+------+-------+
+| H111     | Empire Hotel | New York | 313     | S    |   145 |
+| H111     | Empire Hotel | New York | 412     | N    |   145 |
+| H235     | Park place   | New York | 1267    | N    |   175 |
+| H235     | Park place   | New York | 1289    | N    |   195 |
++----------+--------------+----------+---------+------+-------+
+
+3.
+select name, city from guest order by city;
++---------------+--------------+
+| name          | city         |
++---------------+--------------+
+| Robert Swift  | Atlanta      |
+| Tata Cumming  | Baltimore    |
+| Edward Cane   | Baltimore    |
+| Tom Hancock   | Philadelphia |
+| Adam Wayne    | Pittsburgh   |
+| Vanessa Parry | Pittsburgh   |
++---------------+--------------+
+
+4.
+select h.*,r.room_no,r.type,r.price from hotel h join room r on h.hotel_no=r.hotel_no  where r.type="N" order by price;
++----------+-----------------+----------+---------+------+-------+
+| Hotel_No | name            | city     | room_no | type | price |
++----------+-----------------+----------+---------+------+-------+
+| H437     | Clairmont Hotel | Boston   | 257     | N    |   140 |
+| H111     | Empire Hotel    | New York | 412     | N    |   145 |
+| H437     | Clairmont Hotel | Boston   | 223     | N    |   155 |
+| H498     | James Plaza     | Toronto  | 345     | N    |   160 |
+| H235     | Park place      | New York | 1267    | N    |   175 |
+| H193     | Devon Hotel     | Boston   | 1201    | N    |   175 |
+| H498     | James Plaza     | Toronto  | 467     | N    |   180 |
+| H235     | Park place      | New York | 1289    | N    |   195 |
++----------+-----------------+----------+---------+------+-------+
+
+5.
+select count(hotel_no)as count from hotel;
++-------+
+| count |
++-------+
+|     6 |
++-------+
+
+6.
+select distinct city from guest ;
++--------------+
+| city         |
++--------------+
+| Pittsburgh   |
+| Baltimore    |
+| Philadelphia |
+| Atlanta      |
++--------------+
+
+7.
+select avg(price) from room;
++------------+
+| avg(price) |
++------------+
+|   155.6667 |
++------------+
+
+8.
+ select h.name,r.room_no,r.type from hotel h join room r on h.hotel_no=r.hotel_no ;
++------------------+---------+------+
+| name             | room_no | type |
++------------------+---------+------+
+| Empire Hotel     | 313     | S    |
+| Empire Hotel     | 412     | N    |
+| Park place       | 1267    | N    |
+| Park place       | 1289    | N    |
+| Brownstone Hotel | 876     | S    |
+| Brownstone Hotel | 898     | S    |
+| James Plaza      | 345     | N    |
+| James Plaza      | 467     | N    |
+| Devon Hotel      | 1001    | S    |
+| Devon Hotel      | 1201    | N    |
+| Clairmont Hotel  | 257     | N    |
+| Clairmont Hotel  | 223     | N    |
++------------------+---------+------+
+
+9.
+select h.name,b.date_from,b.date_to,b.room_no from hotel h join booking b on h.hotel_no=b.hotel_no where h.city="New York";
++--------------+-----------+-----------+---------+
+| name         | date_from | date_to   | room_no |
++--------------+-----------+-----------+---------+
+| Empire Hotel | 10-AUG-99 | 15-AUG-99 |     412 |
+| Empire Hotel | 18-AUG-99 | 21-AUG-99 |     412 |
+| Park place   | 05-SEP-99 | 12-SEP-99 |    1267 |
++--------------+-----------+-----------+---------+
+
+10.
+select count(date_from)as count from booking where date_from like"%SEP%";
++-------+
+| count |
++-------+
+|     4 |
++-------+
+
+11.
+select g.name,g.city from hotel h join booking b on h.hotel_no=b.hotel_no join guest g on b.guest_no=g.guest_no where h.city="NEW YORK" and b.date_from like "%AUG%";
++--------------+------------+
+| name         | city       |
++--------------+------------+
+| Adam Wayne   | Pittsburgh |
+| Tata Cumming | Baltimore  |
++--------------+------------+
+
+12.
+ select h.name,r.room_no from hotel h join room r on h.hotel_no=r.hotel_no where r.room_no not in (select room_no from booking);
++------------------+---------+
+| name             | room_no |
++------------------+---------+
+| Empire Hotel     | 313     |
+| Park place       | 1289    |
+| Brownstone Hotel | 876     |
+| Brownstone Hotel | 898     |
+| Clairmont Hotel  | 257     |
++------------------+---------+
+
+13.
+select * from (select h.name, h.city,rank() over (order by r.price desc)p from hotel h join room r on h.hotel_no = r.hotel_no)r where p=1;;
++------------+----------+---+
+| name       | city     | p |
++------------+----------+---+
+| Park place | New York | 1 |
++------------+----------+---+
+
+14.
+select h.name, r.room_no, h.city, r.price from hotel h join room r on h.hotel_no=r.hotel_no where r.price < (select min(r.price) from hotel h join room r on h.hotel_no=r.hotel_no where h.city="boston");
++------------------+---------+---------+-------+
+| name             | room_no | city    | price |
++------------------+---------+---------+-------+
+| Brownstone Hotel | 876     | Toronto |   124 |
+| Brownstone Hotel | 898     | Toronto |   124 |
++------------------+---------+---------+-------+
+
+15.
+ select h.city,avg(r.price) from hotel h join room r on h.hotel_no=r.hotel_no group by h.city;
++----------+--------------+
+| city     | avg(r.price) |
++----------+--------------+
+| New York |     165.0000 |
+| Toronto  |     147.0000 |
+| Boston   |     155.0000 |
++----------+--------------+

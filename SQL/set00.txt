@@ -1,0 +1,203 @@
+1.
+
+select * from employee order by salary desc limit 3;
++------+---------------+--------+--------+------------+
+| e_id | name          | dep_id | salary | manager_id |
++------+---------------+--------+--------+------------+
+| A142 | TARA CUMMINGS | D04    |  99475 | A187       |
+| A132 | PAUL VINCENT  | D01    |  94791 | A120       |
+| A128 | ADAM WAYNE    | D05    |  94324 | A165       |
++------+---------------+--------+--------+------------+
+
+select * from ( select *, row_number() over (order by salary desc) s from employee )sal where s between 1 and 3;
++------+---------------+--------+--------+------------+---+
+| e_id | name          | dep_id | salary | manager_id | s |
++------+---------------+--------+--------+------------+---+
+| A142 | TARA CUMMINGS | D04    |  99475 | A187       | 1 |
+| A132 | PAUL VINCENT  | D01    |  94791 | A120       | 2 |
+| A128 | ADAM WAYNE    | D05    |  94324 | A165       | 3 |
++------+---------------+--------+--------+------------+---+
+
+2. 
+ select * from ( select *, row_number() over (order by salary ) s from employee )sal where s=1;
++------+-------------+--------+--------+------------+---+
+| e_id | name        | dep_id | salary | manager_id | s |
++------+-------------+--------+--------+------------+---+
+| A111 | JOHN HELLEN | D01    |  15380 | A120       | 1 |
++------+-------------+--------+--------+------------+---+
+
+ select * from employee order by salary limit 1;
++------+-------------+--------+--------+------------+
+| e_id | name        | dep_id | salary | manager_id |
++------+-------------+--------+--------+------------+
+| A111 | JOHN HELLEN | D01    |  15380 | A120       |
++------+-------------+--------+--------+------------+
+
+3.
+select * from employee e join dept d on e.dep_id= d.dep_id where dep_manager is null;
+Empty set (0.00 sec)
+
+4.
+ select e.name from employee e join dept d on e.dep_id= d.dep_id where name = dep_manager;;
++-----------------+
+| name            |
++-----------------+
+| TIM ARCHER      |
+| BRUCE WILLS     |
+| ADAM JUSTIN     |
+| ROBERT SWIFT    |
+| NATASHA STEVENS |
++-----------------+
+
+5.
+select * from( select e.*, row_number() over(order by salary)s from employee e join dept d on e.dep_id= d.dep_id where name = dep_manager)sal where s=1;
++------+--------------+--------+--------+------------+---+
+| e_id | name         | dep_id | salary | manager_id | s |
++------+--------------+--------+--------+------------+---+
+| A187 | ROBERT SWIFT | D04    |  27700 | A298       | 1 |
++------+--------------+--------+--------+------------+---+
+
+6.
+select d.dep_name, count(*)as count from employee e join dept d on e.dep_id= d.dep_id group by d.dep_name having d.dep_name like "COMMUNICATIONS";
++----------------+-------+
+| dep_name       | count |
++----------------+-------+
+| COMMUNICATIONS |     6 |
++----------------+-------+
+
+7.
+select * from (select e.name, e.salary ,d.dep_name, row_number() over (order by salary desc)sal from employee e join dept d on e.dep_id=d.dep_id where d.dep_name like "FINANCE")s where sal=1;
++------------+--------+----------+-----+
+| name       | salary | dep_name | sal |
++------------+--------+----------+-----+
+| ADAM WAYNE |  94324 | FINANCE  |   1 |
++------------+--------+----------+-----+
+
+8.
+ select * from (select e.name, e.salary ,d.dep_name, row_number() over (order by salary )sal from employee e join dept d on e.dep_id=d.dep_id where d.dep_name like "PRODUCT")s where sal=1;
++-------------+--------+----------+-----+
+| name        | salary | dep_name | sal |
++-------------+--------+----------+-----+
+| NICK MARTIN |  50174 | PRODUCT  |   1 |
++-------------+--------+----------+-----+
+
+9.
+ select  * ,count(*) as count from (select e.*, rank() over (order by salary desc ) r from employee e join dept d on e.dep_id=d.dep_id where d.dep_name like "HEALTH") ran where r=1;
++------+--------------+--------+--------+------------+------+-------+
+| e_id | name         | dep_id | salary | manager_id | r    | count |
++------+--------------+--------+--------+------------+------+-------+
+| A132 | PAUL VINCENT | D01    |  94791 | A120       |    1 |     1 |
++------+--------------+--------+--------+------------+------+-------+
+
+select name, salary, count(*) as count from employee where salary in (select max(salary) from employee e join dept d on e.dep_id=d.dep_id where d.dep_name like "HEALTH");
++--------------+--------+-------+
+| name         | salary | count |
++--------------+--------+-------+
+| PAUL VINCENT |  94791 |     1 |
++--------------+--------+-------+
+
+10.
+ select e.name from employee e join dept d on e.dep_id=d.dep_id where dep_manager="NATASHA STEVENS" AND name!= "natasha stevens";
++----------------+
+| name           |
++----------------+
+| ADAM WAYNE     |
+| JOSEPH ANGELIN |
++----------------+
+
+11.
+select *, count(*) from employee e join dept d on e.dep_id=d.dep_id where dep_name="HEALTH" group by name;
++------+----------------+--------+--------+------------+--------+----------+-------------+----------+
+| e_id | name           | dep_id | salary | manager_id | dep_id | dep_name | dep_manager | count(*) |
++------+----------------+--------+--------+------------+--------+----------+-------------+----------+
+| A114 | MARTIN TREDEAU | D01    |  54497 | A120       | D01    | HEALTH   | TIM ARCHER  |        1 |
+| A120 | TIM ARCHER     | D01    |  48834 | A298       | D01    | HEALTH   | TIM ARCHER  |        1 |
+| A132 | PAUL VINCENT   | D01    |  94791 | A120       | D01    | HEALTH   | TIM ARCHER  |        1 |
+| A143 | BRED MICHAEL   | D01    |  24488 | A120       | D01    | HEALTH   | TIM ARCHER  |        1 |
+| A176 | EDWARD CANE    | D01    |  89176 | A120       | D01    | HEALTH   | TIM ARCHER  |        1 |
+| A111 | JOHN HELLEN    | D01    |  15380 | A120       | D01    | HEALTH   | TIM ARCHER  |        1 |
++------+----------------+--------+--------+------------+--------+----------+-------------+----------+
+
+12.
+select e.dep_id, e_id,manager_id from employee e join dept d on e.dep_id=d.dep_id where dep_name="COMMUNICATIONS";
++--------+------+------------+
+| dep_id | e_id | manager_id |
++--------+------+------------+
+| D02    | A116 | A187       |
+| D02    | A121 | A187       |
+| D02    | A187 | A298       |
+| D02    | A198 | A187       |
+| D02    | A194 | A187       |
+| D02    | A133 | A187       |
++--------+------+------------+
+
+13.
+ select  dep_name, avg(salary) from employee e join  dept d on e.dep_id=d.dep_id group by dep_name;
++----------------+-------------+
+| dep_name       | avg(salary) |
++----------------+-------------+
+| HEALTH         |  54527.6667 |
+| COMMUNICATIONS |  48271.3333 |
+| PRODUCT        |  58517.5000 |
+| INSURANCE      |  51913.3333 |
+| FINANCE        |  56660.3333 |
++----------------+-------------+
+
+14.
+
+ select dep_name,sum(salary) from employee e join dept d on e.dep_id=d.dep_id where dep_name="FINANCE";
++----------+-------------+
+| dep_name | sum(salary) |
++----------+-------------+
+| FINANCE  |      169981 |
++----------+-------------+
+
+15.
+select *  from (select d.dep_id,d.dep_manager,sum(salary) as sum, rank() over (order by sum(salary))s from employee e join dept d on e.dep_id=d.dep_id group by d.dep_manager)sal where s=1;
++--------+-------------+--------+---+
+| dep_id | dep_manager | sum    | s |
++--------+-------------+--------+---+
+| D03    | BRUCE WILLS | 117035 | 1 |
++--------+-------------+--------+---+
+
+16.
+ select dep_name, count(*)  from employee e join dept d on e.dep_id=d.dep_id group by dep_name;
++----------------+----------+
+| dep_name       | count(*) |
++----------------+----------+
+| HEALTH         |        6 |
+| COMMUNICATIONS |        6 |
+| PRODUCT        |        2 |
+| INSURANCE      |        3 |
+| FINANCE        |        3 |
++----------------+----------+
+
+17.
+ select dep_name, count(*) from employee e join dept d on e.dep_id=d.dep_id where salary <20000 group by dep_name;
++----------------+----------+
+| dep_name       | count(*) |
++----------------+----------+
+| COMMUNICATIONS |        1 |
+| HEALTH         |        1 |
++----------------+----------+
+
+18.
+select e.dep_id, d.dep_name, count(*) from  employee e join dept d on e.dep_id=d.dep_id where e.dep_id="D04";
++--------+-----------+----------+
+| dep_id | dep_name  | count(*) |
++--------+-----------+----------+
+| D04    | INSURANCE |        3 |
++--------+-----------+----------+
+
+19.
+ select * from (select d.*,count(*),rank() over(order by count(*) desc)a from employee e join dept d on e.dep_id=d.dep_id group by d.dep_name)b where a=1  ;
++--------+----------------+-------------+----------+---+
+| dep_id | dep_name       | dep_manager | count(*) | a |
++--------+----------------+-------------+----------+---+
+| D01    | HEALTH         | TIM ARCHER  |        6 | 1 |
+| D02    | COMMUNICATIONS | ADAM JUSTIN |        6 | 1 |
++--------+----------------+-------------+----------+---+
+
+20.
+ select e.name from  employee e join dept d on e.dep_id=d.dep_id where e.dep_id=(select dep_id from dept where dep_manager="TIM COOK");
+Empty set (0.00 sec)
