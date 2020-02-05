@@ -1,0 +1,72 @@
+import datetime
+
+def country_name(countryname,country):
+    for i in country:
+        if i==countryname:
+            return i
+def curr_time(countryname,time,time_zone):
+    t=datetime.datetime.now()
+    #print(t)
+    time1=t.strftime("%H:%M:%S")
+    hour=t.strftime("%H")
+    minute=t.strftime("%M")
+    minute=(float(minute))/60
+    print(time1)
+    #print(minute)
+    tt=(float(float(hour)+minute))
+    l=[]
+    for i in time:
+        s=i[3:]
+        l.append(s)
+    #print(l)
+    ti=dict(zip(country,l))
+    #print(ti)
+    zone=dict(zip(country,time_zone))
+    for i in ti:
+        if i==countryname:
+            res=round(abs(tt+float(ti[i])),2)
+            return res,zone.get(i)
+            
+def lang(countryname,country,language):
+    d=dict(zip(country,language))
+    for i in d:
+        if i==countryname:
+            return d[i]
+
+def currency_val(countryname,country,currency_rate):
+    curr=dict(zip(country,currency_rate))
+    for i in curr:
+        if i==countryname:
+            return curr.get(i)
+
+def equicurr_val(countryname,amt,country,currency_rate,currency):
+    val=[]
+    for i in currency_rate:
+        equi_amt=amt/float(i)
+        val.append(equi_amt)
+    #print (val)
+    for i in range(0,len(country)):
+        if country[i]==countryname:
+            #print (val[i])
+            return round(val[i],2),currency[i]
+
+
+country=["UK","USA","INDIA","MEXICO","AUSTRALIA"]
+time_zone=["GMT","EST","IST","CST","AEDT"]
+time=["GMT-5.5","EST-10.5","IST+0.0","CST-11.5","AEDT+5.5"]
+currency=["Pound","USD","INR","USD","AUD"]
+language=["English","Engish","Hindi","Spanish","English"]
+currency_rate=["92.72","71.32","1","71.32","47.73"]
+
+countryname=input("Enter country:")
+amt=int(input("Enter amountin INR:"))
+
+print("Country:",country_name(countryname,country))
+
+print("language:",lang(countryname,country,language))
+
+print("Currency Value:",currency_val(countryname,country,currency_rate),"INR")
+
+print("Equivalent Currency value for ",amt,"INR:",equicurr_val(countryname,amt,country,currency_rate,currency))
+
+print("Current Time:",curr_time(countryname,time,time_zone))
