@@ -1,0 +1,135 @@
+3.sum of digits in alphanumneric string
+
+import functools
+def sum(x):
+    new=functools.reduce(lambda x,y:x+y,x)
+    return new
+
+
+a=raw_input("enter a alphanumneric string")
+l=[]
+for i in a:
+    if i.isdigit():
+        l.append(int(i))
+print(sum(l))
+
+output:
+enter a alphanumneric string 1edgh145
+[1, 1, 4, 5]
+11
+
+5.
+def camel_case(n):
+    for i in n:
+        b=ord(i)
+        if b <90:
+            b=b+32
+            print(chr(b),end="")
+        else:
+            b=b-32
+            print(chr(b),end="")
+a=input("Enter a string")
+camel_case(a)
+
+output:
+Enter a stringAbceT                                                                                                           
+aBCEt
+
+6.
+def check_substring(n,p):
+    count=0
+    if len(p)<3:
+        print ("length of substring is less than 3")
+    else:
+        for i in p:
+            if i in n:
+                count=count+1 
+            else:
+                continue
+        if (len(p)==count):
+            print("True")
+        else:
+            print("False")
+        
+        
+
+a="abccgdeedfcuihguuuessfd"
+b="cgh"
+check_substring(a,b)
+
+output:
+True  
+
+7.
+def sum_vowel(n):
+    vowel={"a":1,"e":2,"i":3,"o":4,"u":5}
+    sum1=0
+    for i in n:
+        if i in vowel:
+            sum1=sum1+vowel[i]
+    print("sum is:",sum1)
+            
+            
+a="abcdea"
+sum_vowel(a)
+
+output:
+sum is: 4  
+
+9.
+def check_palindrome(n):
+    n2=0
+    if n<0:
+        print ("not palindrome")
+    else:
+        n1=n
+        while n>0:
+            num=n%10
+            n2=num+n2*10
+            n=n//10
+        if n1==n2:
+            print("palindrome")
+        else:
+            print("not palindrome")
+
+a=int(input("Enter:"))
+check_palindrome(a)
+
+output:
+Enter:-343                                                                                                                    
+not palindrome                                                                                                                
+
+Enter:343                                                                                                                     
+palindrome 
+
+1.
+import re
+def valid_mail(n):
+    l=['gmail','hotmail','yahoo','accenture','oerr']
+    a=re.search(r'([^\w])([a-z]*)', n)
+    mail=a.group(2)
+    if mail in l:
+        print(n,"is a valid mail id")
+    else:
+        print("Invalid email id entered")
+            
+
+n='accenture@gmail.com'
+valid_mail(n)
+
+output:
+accenture@gmail.com is a valid mail id    
+
+2.
+import re
+l1=["aajdgkashgdk@gmail.com", "arar@asd.com", "kashdk@asd.com", "k@sd.com"]
+
+for i in l1:
+    aaa=(re.search("[\w]{2,64}@[gmail|yahoo|msn]{2,10}.[\w]{2,3}",i))
+    print(aaa)
+	
+output:
+<_sre.SRE_Match object; span=(0, 22), match='aajdgkashgdk@gmail.com'>                                                         
+None                                                                                                                          
+None                                                                                                                          
+None
