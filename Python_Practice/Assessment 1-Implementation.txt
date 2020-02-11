@@ -1,0 +1,31 @@
+1.
+d={"one":1,"two":2,"three":3,"four":4,"five":5,"six":6,"seven":7,"eight":8,"nine":9,"zero":0}
+a=input("Enter:")
+l=a.split(" ")
+b=d.get(l[0])
+c=d.get(l[2])
+if l[1]=="PLUS":
+    res=b+c 
+    for i,j in d.items():
+        if j==res:
+            print (i)            
+elif l[1]=="MINUS":
+    res=b-c 
+    for i,j in d.items():
+        if j==res:
+            print (i)            
+elif l[1]=="MULTIPLY":
+    res=b*c
+    for i,j in d.items():
+        if j==res:
+            print (i)           
+elif l[1]=="DIVIDE":
+    try:
+        res=b/c
+        for i,j in d.items():
+            if j==res:
+                print (i)             
+    except:
+        print("not defined")
+else:
+    print("enter valid expression")
