@@ -1,0 +1,90 @@
+1. program used to find the players list along with their score for their games and used to find the average score, max score and total goals
+
+from functools import reduce
+class sports(object):
+    def __init__(self):
+        self.cricket = 1
+        self.football = 2
+
+    def cricketT20(self,zz): # returns the players list along with runs scored
+        return (zz)
+
+    def footbal(self,points): # returns the players list along with goals scored
+        return points
+
+    def calavgscore(self,z):
+        x=list(filter(lambda a:z[a]>70,z)) # returns the players list who have scored more than 50 runs
+        return x
+    def avgscore(self,z): # returns the avgerage score
+        sum = 0
+        for i in z:
+            sum = sum + 1
+        y = reduce(lambda i, j: i + j, z.values())
+        avg_score = round(float(y / sum), 3)  # calculating avg score of the team
+        return avg_score
+
+    def totalgoals(self,points): # returns the total goals scored
+        sum=0
+        y = reduce(lambda i,j: i+j,points.values())
+        return str(y) + " total goals"
+
+a = sports()
+aa = sports()
+b=a.__dict__
+print(b)
+name=['dhoni','kholi','raina']
+score=[80,60,90]
+z=zip(name,score)
+card=dict(z)
+namef=['ronaldo','messi','bigil','neymar']
+goals=[2,3,4,5]
+zb=zip(namef,goals)
+points = dict(zb)
+
+while True:
+    chose = input("CHOOSE ANY FROM CRICKET OR FOOTBALL :")
+    if chose == "done":
+        print("exit ")
+        break
+    elif int(chose) >0 and int(chose) <3:
+        for i ,j in b.items():
+            if j == int(chose) and j == 1:
+                print("u have chosen ", i.upper())
+                print("Players along with  runs scored")
+                print(a.cricketT20(card))
+                print("Players who have scored above 50 runs",a.calavgscore(card))
+                print("Average score of the team",a.avgscore(card))
+                print()
+            elif j==int(chose) and j==2:
+                print("u have chosen ", i.upper())
+
+                print("Players along with  goals scored ")
+                print(a.footbal(points))
+                print("Total Goals scored",a.totalgoals(points))
+                print()
+    else:
+        print("the number has no game ")
+        print()
+		
+
+Output:
+
+{'cricket': 1, 'football': 2}
+CHOOSE ANY FROM CRICKET OR FOOTBALL :1
+u have chosen  CRICKET
+Players along with  runs scored
+{'dhoni': 80, 'kholi': 60, 'raina': 90}
+Players who have scored above 50 runs ['dhoni', 'raina']
+Average score of the team 76.667
+
+CHOOSE ANY FROM CRICKET OR FOOTBALL :2
+u have chosen  FOOTBALL
+Players along with  goals scored 
+{'ronaldo': 2, 'messi': 3, 'bigil': 4, 'neymar': 5}
+Total Goals scored 14 total goals
+
+CHOOSE ANY FROM CRICKET OR FOOTBALL :3
+the number has no game 
+
+CHOOSE ANY FROM CRICKET OR FOOTBALL :done
+exit 

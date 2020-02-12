@@ -1,0 +1,160 @@
+1. Passing Function as a parameter
+	
+	def speak():
+    print(" Inside speak")
+	def action(func): # func  as a parameter
+    print("Inside action")
+    func()
+    
+	action(speak) # passing a function as a parameter
+	
+	Output:
+	
+	Inside action
+	Inside speak
+	
+2. Nested Function
+
+	def outer():
+    print("Outer")
+    def inner():
+        print("inner")
+    return inner 				# returns the reference of the inner func, inner func will not be called
+
+	print(outer())
+	
+	Output:
+	
+	Outer
+	<function outer.<locals>.inner at 0x03781A90>
+	
+	def outer():
+    print("Outer")
+    def inner():
+        print("inner")
+    return inner() # returns the nothing, inner() will call the inner func and inner func will be executed
+	
+	print(outer())
+	
+	Output:
+	
+	Outer
+	inner
+	None
+	
+3. Returning function
+	def outer():
+    print("Outer")
+    def inner():
+        return "Returning inner"
+    return inner() # inner func will be called and inner func will be executed 
+	
+	print(outer())
+	
+	Output:
+	
+	Outer
+	Returning inner
+	
+4. Creating a reference
+
+	def action():
+	print("Under action")
+
+
+	action()
+	action2 = action  # action func is referenced to action2 
+	action2()
+	print(action.__name__)  # to check what is there inside action2
+	
+	Output:
+	
+	Under action
+	Under action
+	action
+
+5. Decorators 
+
+	def talk(func):  # func will have speak_loud/speak_soft function Decorators take func as input
+    def inner():
+        a = func()  # speak_loud/speak_soft func will be called and executed
+        if func.__name__ == "speak_loud":
+            print("speak_loud is executed")
+            return a.upper()
+        else:
+            print("speak_soft is executed")
+            return a.lower()
+    return inner  #  decorators will return function
+
+
+	@talk
+	def speak_loud():
+		print("loud")
+		return "upper case"
+
+	@talk
+	def speak_soft():
+		print("soft")
+		return "LOWER CASE"
+
+
+	print(speak_loud())  # return inner will bring the  control here
+	print(speak_soft())
+
+6. 2 decorators
+
+	def talk(func):  # func will have speak_loud/speak_soft function Decorators take func as input
+    def inner():
+        a = func()  # speak_loud/speak_soft func will be called and executed
+        if func.__name__ == "speak_loud":
+            print("speak_loud is executed")
+            return a.upper()
+        else:
+            print("speak_soft is executed")
+            return a.lower()
+
+    return inner  # decorators will return inner function, the inner function will be passed as parameter to split_word
+
+
+	def split_word(func):  # func will have inner function from talk
+		def split_inner():
+			a = func()
+			# print(func.__name__)
+			print("split word")
+			words = a.split(" ")
+			return words
+
+		return split_inner  # returns a function 
+
+
+	@split_word
+	@talk
+	def speak_loud():
+		print("loud")
+		return "upper case"
+
+
+	@split_word
+	@talk
+	def speak_soft():
+		print("soft")
+		return "LOWER CASE"
+
+
+	print(speak_loud())  # 1st talk will executed and then to split_word and the control comes here to print the result
+	print(speak_soft())
+	
+	Output:
+	
+	loud
+	speak_loud is executed
+	split word
+	['UPPER', 'CASE']
+	soft
+	speak_soft is executed
+	split word
+	['lower', 'case']
+
+
+
+	
