@@ -1,0 +1,215 @@
+
+3.sum of digits in alphanumneric string
+
+import functools
+def sum(x):
+    new=functools.reduce(lambda x,y:x+y,x) #cal sum of digits in the list
+    return new
+
+
+a=raw_input("enter a alphanumneric string:")
+l=[]
+for i in a:
+    if i.isdigit():
+        l.append(int(i))
+print(sum(l))
+
+Input:
+enter a alphanumneric string:1edgh145
+
+output:
+[1, 1, 4, 5]
+11
+
+______________________________________________________________________________________________
+
+5.
+def camel_case(n):
+    for i in n:
+        b=ord(i) #returns the ascii value
+        if b <90: #if <90 means it is a Capital letter so convert it to small letter by adding 32
+            b=b+32
+            print(chr(b),end="") #chr()converts ascii value to char
+        else:
+            b=b-32 #if >90 means it is a small letter so convert it to capital letter by sub 32
+            print(chr(b),end="")
+			
+		
+a=input("Enter a string:")
+camel_case(a)
+
+Input:
+Enter a string:AbceT  
+
+Output:                                                                                                         
+aBCEt
+
+__________________________________________________________________________________________________
+
+6. Check for each letter of substring is present in main string or not (even more than one occurance is there then consider it as 1)
+
+def check_substring(n,p):
+    count=0
+    if len(p)<3:
+        print ("length of substring is less than 3")
+    else:
+        for i in p:
+            if i in n:
+                count=count+1 
+            else:
+                continue
+        if (len(p)==count):
+            print("True")
+        else:
+            print("False")
+        
+        
+
+a="abccgdeedfcuihguuuessfd"
+b="cgh"
+check_substring(a,b)
+
+output:
+True  
+
+__________________________________________________________________________________________________
+
+7.sum of vowels in the given string 
+
+def sum_vowel(n):
+    vowel={"a":1,"e":2,"i":3,"o":4,"u":5}
+    sum1=0
+    for i in n:
+        if i in vowel: #if a e i o u is present in given string then sum 
+            sum1=sum1+vowel[i]
+    print("sum is:",sum1)
+            
+            
+a=input("Enter a string:")
+sum_vowel(a)
+
+Input:
+Enter a string:abceiout  
+
+Output:                                                                                                     
+sum is: 15   
+
+______________________________________________________________________________________________________
+
+9.Number palindrome
+
+def check_palindrome(n):
+    n2=0
+    if n<0:
+        print ("not palindrome")
+    else:
+        n1=n
+        while n>0:
+            num=n%10
+            n2=num+n2*10
+            n=n//10
+        if n1==n2:
+            print("palindrome")
+        else:
+            print("not palindrome")
+
+a=int(input("Enter:"))
+check_palindrome(a)
+
+Input:
+Enter:-343
+
+Output:                                                                                                                    
+not palindrome                                                                                                                
+
+Input:
+Enter:343  
+
+Output:                                                                                                                   
+palindrome 
+__________________________________________________________________________________________________________
+
+1. Check valid email or not
+
+import re
+def valid_mail(n):
+    l=['gmail','hotmail','yahoo','accenture','oerr']
+    a=re.search(r'([^\w])([a-z]*)', n)
+    mail=a.group(2)
+    if mail in l:
+        print(n,"is a valid mail id")
+    else:
+        print("Invalid email id entered")
+            
+
+n='accenture@gmail.com'
+valid_mail(n)
+
+output:
+accenture@gmail.com is a valid mail id    
+
+______________________________________________________________________________________________________________
+
+2.
+import re
+l="aajdgkashgdk@gmail.com arar@asd.com  kashdk@asd.com k@sd.com dkjwhfeuiwf@yahoo.com"
+
+mail=(re.findall("[\w]{2,30}@[gmail|yahoo|msn]{2,10}.[\w]{2,3}",l))
+print("the mail ids are",mail)
+
+Output:
+the mail ids are ['aajdgkashgdk@gmail.com', 'dkjwhfeuiwf@yahoo.com'] 
+_____________________________________________________________________________________________________________
+
+8.sort the list based of 3rd element
+
+l=["wcab","wcde","wcbe"]
+d={}
+a=[]
+for i in l:
+    a.append(i[2])
+    d[i[2]] = i
+print(d)
+a.sort()
+new=[]
+for i in a:
+    if i in d:
+        new.append(d.get(i))
+print("new list sorted based on 3rd element is :",new)
+
+output:
+{'a': 'wcab', 'd': 'wcde', 'b': 'wcbe'}
+new list sorted based on 3rd element is : ['wcab', 'wcbe', 'wcde']
+
+_________________________________________________________________________________________________________________
+
+10.Find the substring which has the longest consecutive characters
+
+a="abcdabdmnopqrstabcdefghijklmnopqrstuv "
+count=0
+l=[]
+str1=""
+for i in range(0,len(a)-1):
+    c=ord(a[i+1])-ord(a[i])
+    if c == 1: # if the letters are consecutive the their ascii value difference will be 1
+        count= count+1 #count inc till where the string is consecutive
+        str1=str1+a[i] #last char consecutive substring will not be concatenated so it appended in else part
+    else:
+        str1=str1+a[i] #appending the last char of consecutive substring
+        l.append(str1) # appending the obtained substring to a list
+        str1=" "       #refreshing the str1 so that next consecutive substring can be obtained from the string
+        print(str1)
+        count=0
+print(l)
+max=0
+for i in range(0,len(l)-1):
+    if len(l[i])>len(l[i+1]): #comparing the length of the substrings that were appended in the list
+        max=l[i]
+    else:
+        max=l[i+1]
+print("The longest sequence is",max,"and length of the sequence is",len(max))
+
+Output:
+
+['abcd', ' ab', ' d', ' mnopqrst', ' abcdefghijklmnopqrstuv']
+The longest sequence is  abcdefghijklmnopqrstuv and length of the sequence is 23
