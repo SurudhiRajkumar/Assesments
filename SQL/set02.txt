@@ -11,7 +11,28 @@ select p.name , sum(pi.weight) from plant p inner join picked pi on p.plantid=pi
 select pi.plantFK, pi.gardenerFK,
     case when g.name="erin" and p.name="tomato" and l.name="south" then l.locationid
     from picked pi inner join location l on pi.loacationFK=l.locationid inner join plant p on pi.plantFk=p.plantid inner join gardener g on  pi.gardenerFK=g.gardener;
-	
+
+3.
+alter table gardener add Expr int;
+desc gardener;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| gardener_id | int         | NO   | PRI | NULL    |       |
+| name        | varchar(30) | YES  |     | NULL    |       |
+| age         | int         | YES  |     | NULL    |       |
+| Expr        | int         | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+alter table gardener modify Expr varchar(30);
+desc gardener;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| gardener_id | int         | NO   | PRI | NULL    |       |
+| name        | varchar(30) | YES  |     | NULL    |       |
+| age         | int         | YES  |     | NULL    |       |
+| Expr        | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
 4.
 select p.name from planted pl inner join plant p on pl.plantFK=p.plantid where seeds<20 and (month(date1)=04 and day(date1)=14);
 +--------+
@@ -29,3 +50,16 @@ select name, sunlight, water from plant group by name having name like "c%" or n
 | Corn   |     0.44 |  0.76 |
 | Radish |     0.28 |  0.84 |
 +--------+----------+-------+
+
+6.
+select name,sum(seeds)as sum from plant p join planted pp on p.plant_id=pp.plantfk group by name order by name desc;
++---------+------+
+| name    | sum  |
++---------+------+
+| Tomato  |   38 |
+| Radish  |   30 |
+| Lettuce |   30 |
+| Corn    |   32 |
+| Carrot  |   42 |
+| Beet    |   36 |
++---------+------+
