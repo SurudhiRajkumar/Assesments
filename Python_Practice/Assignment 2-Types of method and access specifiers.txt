@@ -1,0 +1,79 @@
+class Company:
+    company_name = "Accenture"
+
+    def __init__(self, fname, lname):
+        self._f = fname  # Protected variable can be accessed only by inherited class
+        self._l = lname  # Protected
+        self.__id = 0  # Private variable variable can be accessed only through getters and setters
+        self.desg = "ASE"  # Public variable can be accessed by any class
+
+    def name_of_company(self):
+        print("Name of the company is", self.__class__.company_name)  # displaying class variable using self
+
+    def set_id(self, ide):
+        self.__id = self.__id + ide
+
+    def get_id(self):
+        print("Enterprise id is:", self.__id)  # accessing private variable through get method
+        print()
+
+
+class Employee(Company):
+    count = 0
+
+    def __init__(self, fname, lname):
+        Company.__init__(self, fname, lname)  # using __init__ method of Company class here through inheritance
+        self.__class__.count = self.__class__.count + 1  # increments the count whenever an object is created
+
+    def name_of_employee(self):
+        print("Full name:", self._f +" "+self._l)  # accessing protected variable
+
+    @classmethod
+    def count_of_employee(cls):
+        print("count of employees", cls.count)
+
+    @staticmethod
+    def name_of_project(name):
+        print("name of the project:", name)
+
+    def designation(self):
+        print(self._f + " " + self._l, "Designation is ", self.desg)  # accessing public variable
+
+
+e1 = Employee("surudhi", "rajkumar")
+e1.name_of_company()
+e1.name_of_employee()
+Employee.name_of_project("Cigna")
+e1.designation()
+e1.set_id(1168728)
+e1.get_id()
+
+e2 = Employee("krishna", "vasan")
+e2.name_of_company()
+e2.name_of_employee()
+Employee.name_of_project("DNA")
+e2.designation()
+e2.set_id(82736933)
+e2.get_id()
+
+e3=Employee("sumathi", "rajkumar")
+
+
+Employee.count_of_employee()
+
+
+Output:
+
+Name of the company is Accenture
+Full name: surudhi rajkumar
+name of the project: Cigna
+surudhi rajkumar Designation is  ASE
+Enterprise id is: 1168728
+
+Name of the company is Accenture
+Full name: krishna vasan
+name of the project: DNA
+krishna vasan Designation is  ASE
+Enterprise id is: 82736933
+
+count of employees 3
