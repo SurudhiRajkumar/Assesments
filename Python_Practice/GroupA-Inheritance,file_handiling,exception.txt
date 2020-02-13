@@ -1,0 +1,59 @@
+import re
+
+
+class God:  # god class has the chosen value given by user using which the respective files are selected
+    #_count = 0
+
+    def __init__(self, c):
+        self.c = c
+
+
+class Human(God):
+    def __init__(self, c):
+        God.__init__(self, c)
+
+    def read_file(self, name):
+        print(self.c, "is the chosen file and name is : ", name.upper()) # reads the chosen value from god class
+        try:
+
+            f = open(name, "r")
+            # l = f.read().splitlines()
+            l = f.read()
+            print(l)
+        except FileNotFoundError as fe:
+            print(fe.strerror)
+        self.find_the(l)
+
+    @classmethod
+    def find_the(cls, lines):
+        l = len(re.findall(" the ", lines))
+        # for line in lines:
+        #
+        #     words = line.split(" ")
+        #     print(words)
+        #
+        # for the_word in words:
+        #     if the_word == "the":
+        #         cls._count += 1
+        # print("\nthere are ", cls._count," word \"the\" in the file ")
+        print(l)
+
+
+chose = int(input(" choose 1 -> super power file and 2 -> human file :"))
+print(chose)
+if chose > 2 or chose < 0:
+    print("chose from 1 or 2")
+elif chose == 1:
+    name = "filegods.txt"
+
+elif chose == 2:
+    name = "filehuman.txt"
+
+else:
+    print()
+
+try:
+    a = Human(chose)
+    a.read_file(name)
+except NameError as e:
+    print("chose only from 1 or 2 because -> file", e)

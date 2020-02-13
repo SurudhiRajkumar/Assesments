@@ -1,0 +1,62 @@
+2. Identify empty tuples
+
+	l=[("a","b"),(),("v"),(),(" "," ")]
+	count=0
+	for i in range(0,len(l)):
+		if len(l[i])==0:
+			count +=1
+			print("index of empty tuple is",i)
+		else:
+			continue
+	print("no of empty tuple is",count)
+
+output:
+index of empty tuple is 1
+index of empty tuple is 3
+no of empty tuple is 2
+
+4.Capitalize 1st letter of each word
+
+	a=input("enter:")
+	#print(a.title())
+	b=a.split(" ")
+	new = " "
+	for i in b:
+		c=i.capitalize()
+		new=new+c+" "
+	print(new)
+
+output:
+enter:welcome to python
+Welcome To Python 
+
+6. convert list to string without 'x'/concat
+
+	l=["Welcome","to","python"]
+	c=" "
+	d=c.join(l)
+	print(d)
+
+output:
+Welcome to python
+
+5.
+
+	import re
+	l=input("Enter a ip:")
+	a=re.match(r"\b(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])",l)
+	if a is not  None:
+		print(a.group(),"is a valid IP address")
+	else:
+		print(l,"not valid IP address")
+		
+Output:
+
+Enter a ip:0.0.0.0
+0.0.0.0 is a valid IP address
+
+Enter a ip:299.265.90.8
+299.265.90.8 not valid IP address
+
+6.
+
