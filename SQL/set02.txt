@@ -1,0 +1,32 @@
+1.
+select p.name , sum(pi.weight) from plant p inner join picked pi on p.plantid=pi.plantFK group by p.name having p.name="corn";
++------+----------------+
+| name | sum(pi.weight) |
++------+----------------+
+| Corn |          17.54 |
++------+----------------+
+
+
+2.
+select pi.plantFK, pi.gardenerFK,
+    case when g.name="erin" and p.name="tomato" and l.name="south" then l.locationid
+    from picked pi inner join location l on pi.loacationFK=l.locationid inner join plant p on pi.plantFk=p.plantid inner join gardener g on  pi.gardenerFK=g.gardener;
+	
+4.
+select p.name from planted pl inner join plant p on pl.plantFK=p.plantid where seeds<20 and (month(date1)=04 and day(date1)=14);
++--------+
+| name   |
++--------+
+| Carrot |
++--------+
+
+5.
+select name, sum(sunlight),sum(water) from plant group by name having name like "%c%" or name like "%r%";
++---------+---------------+------------+
+| name    | sum(sunlight) | sum(water) |
++---------+---------------+------------+
+| Carrot  |          0.26 |       0.82 |
+| Corn    |          0.44 |       0.76 |
+| Radish  |          0.28 |       0.84 |
+| Lettuce |          0.29 |       0.85 |
++---------+---------------+------------+
