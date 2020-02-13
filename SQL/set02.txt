@@ -63,3 +63,14 @@ select name,sum(seeds)as sum from plant p join planted pp on p.plant_id=pp.plant
 | Carrot  |   42 |
 | Beet    |   36 |
 +---------+------+
+
+7.
+select p.name, (sum(pi.amount)/sum(pl.seeds)) as avgerage from planted pl inner join picked pi on pl.plantFK=pi.plantFK inner join plant p on pl.plantFK=p.plantid group by p.name;
++--------+----------+
+| name   | avgerage |
++--------+----------+
+| Carrot |   0.9524 |
+| Corn   |   2.1875 |
+| Tomato |   0.3947 |
+| Radish |   0.7667 |
++--------+----------+
