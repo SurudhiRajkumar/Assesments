@@ -21,12 +21,11 @@ select p.name from planted pl inner join plant p on pl.plantFK=p.plantid where s
 +--------+
 
 5.
-select name, sum(sunlight),sum(water) from plant group by name having name like "%c%" or name like "%r%";
-+---------+---------------+------------+
-| name    | sum(sunlight) | sum(water) |
-+---------+---------------+------------+
-| Carrot  |          0.26 |       0.82 |
-| Corn    |          0.44 |       0.76 |
-| Radish  |          0.28 |       0.84 |
-| Lettuce |          0.29 |       0.85 |
-+---------+---------------+------------+
+select name, sunlight, water from plant group by name having name like "c%" or name like "r%";
++--------+----------+-------+
+| name   | sunlight | water |
++--------+----------+-------+
+| Carrot |     0.26 |  0.82 |
+| Corn   |     0.44 |  0.76 |
+| Radish |     0.28 |  0.84 |
++--------+----------+-------+
