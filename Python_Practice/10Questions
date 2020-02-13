@@ -23,7 +23,7 @@ output:
 
 ______________________________________________________________________________________________
 
-5.
+5.SWAP uppercase to lower case and vice versa in a string
 def camel_case(n):
     for i in n:
         b=ord(i) #returns the ascii value
