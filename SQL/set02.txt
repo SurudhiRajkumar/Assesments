@@ -74,3 +74,16 @@ select p.name, (sum(pi.amount)/sum(pl.seeds)) as avgerage from planted pl inner 
 | Tomato |   0.3947 |
 | Radish |   0.7667 |
 +--------+----------+
+
+8.
+select g.name,p.name,pi.date1,pi.amount from picked pi inner join gardener g on pi.gardenerFK=g.gardenerid inner join plant p on pi.plantFK=p.plantid order by g.name desc;
++--------+--------+------------+--------+
+| name   | name   | date1      | amount |
++--------+--------+------------+--------+
+| Tim    | Carrot | 2012-08-18 |     28 |
+| Tim    | Corn   | 2012-08-28 |     18 |
+| Tim    | Radish | 2012-07-16 |     23 |
+| Father | Corn   | 2012-08-22 |     52 |
+| Erin   | Carrot | 2012-08-16 |     12 |
+| Erin   | Tomato | 2012-08-22 |     15 |
++--------+--------+------------+--------+
