@@ -29,3 +29,50 @@ elif l[1]=="DIVIDE":
         print("not defined")
 else:
     print("enter valid expression")
+	
+3.
+
+num=int(input("Enter a number"))
+if num%3==0 and num%5==0:
+    print (num," is divisible by 3 and 5")
+elif num%3==0:
+    print(num, " is divisible by  3")
+elif num%5==0:
+    print(num," is divisible by  5")
+else:
+    print(num, "is neither divisible by 3 nor divisible by 5")
+
+OUTPUT:
+Enter a number 15
+15  is divisible by 3 and 5
+
+Enter a number 20
+20  is divisible by  5
+
+4.
+num=int(input("Enter a number:"))
+sum=0
+for i in range(1,num+1):
+    if i % 3 == 0:
+        sum=sum+i
+    else:
+        continue
+print("sum of series which is divisible by 3 is",sum)
+
+OUTPUT:
+Enter a number:10
+sum of series which is divisible by 3 is 18
+
+5.
+import calendar
+
+B_day=input("Enter your birthday with year(yyyy/mm/dd)" )
+dat=B_day.split('/')
+d=calendar.weekday(int(dat[0]),int(dat[1]),int(dat[2]))
+print(calendar.day_name[d])
+
+Output:
+Enter your birthday with year(yyyy/mm/dd)1997/11/12                                                                           
+Wednesday                                                                                                                     
+         
+
