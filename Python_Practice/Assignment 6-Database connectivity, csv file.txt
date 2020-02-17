@@ -1,0 +1,173 @@
+Create table 
+
+import pymysql
+
+db=pymysql.connect("localhost","root","root","employee")
+cursor=db.cursor()
+sql="create table company ( id int , e_name varchar(20))"
+cursor.execute(sql)
+
+
+db.close()
+
+desc company;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| id     | int         | YES  |     | NULL    |       |
+| e_name | varchar(20) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+**************************************************************************
+
+creating a CSV file and inserting values
+
+import csv
+f=open("exxx.csv","w")
+w=csv.writer(f)
+for i in range(0,4):
+    id=int(input("Enter ID of employee"))
+    name=input("Enter name of employee")
+    w.writerow([id,name])
+
+****************************************************************************
+
+reading the csv file
+
+import csv
+f=open("exxx.csv","r")
+r=csv.reader(f)
+for i in r:
+    for j in i:
+        print(j,"\t",end="")
+    print()
+f.close()
+
+Output:
+	
+ 	 	
+1 	suru 	
+ 	 	
+2 	subbu 	
+ 	 	
+3 	akshatha 	
+ 	 	
+4 	kriti 	
+
+*******************************************************************************
+
+inserting values from csv file to mysqldb
+
+import pymysql
+import csv
+
+db=pymysql.connect("localhost","root","root","employee")
+cursor=db.cursor()
+f=open("exxx.csv","r")
+r=csv.reader(f)
+for i in r:
+    cursor.execute("insert into company(id,e_name) values(%s,%s)",i)
+db.commit()
+
+select * from company;
++------+----------+
+| id   | e_name   |
++------+----------+
+|    1 | surudhi  |
+|    2 | subbu    |
+|    3 | akshatha |
+|    4 | kriti    |
++------+----------+
+
+*************************************************************************************
+
+operations
+
+1.select all data
+
+import pymysql
+
+db=pymysql.connect("localhost","root","root","employee")
+cursor=db.cursor()
+sql="Select * from company"
+cursor.execute(sql)
+r=cursor.fetchall()
+for i in r:
+    print(i)
+print("done")
+db.close()
+
+Output:
+(1, 'surudhi')
+(2, 'subbu')
+(3, 'akshatha')
+(4, 'kriti')
+done
+
+2.Update
+import pymysql
+
+db=pymysql.connect("localhost","root","root","employee")
+cursor=db.cursor()
+sql="update company set e_name='kriti jha' where id=4"
+try:
+    cursor.execute(sql)
+    db.commit()
+except:
+    print("not possible")
+    db.rollback()
+
+print("done")
+db.close()
+
+select * from company;
++------+-----------+
+| id   | e_name    |
++------+-----------+
+|    1 | surudhi   |
+|    2 | subbu     |
+|    3 | akshatha  |
+|    4 | kriti jha |
++------+-----------+
+
+***************************************************************************
+reading each record to a jason file
+
+import json
+import pymysql
+
+db=pymysql.connect("localhost","root","root","employee")
+cursor=db.cursor()
+sql="select * from company"
+cursor.execute(sql)
+r=cursor.fetchall()
+d={}
+str1='.json'
+for i in r:
+    d[i[0]]=i[1::]
+    c=json.dumps(d)
+    print(c)
+    f_name=str(i[0])+str1
+    f=open(f_name,"w")
+    f.write(c)
+    f.close()
+    d={}
+
+
+Output:
+
+1.jason
+
+{"1": ["surudhi"]}
+
+2.jason
+
+{"2": ["subbu"]}
+
+3.jason
+
+{"3": ["akshatha"]}
+
+4.jason
+
+{"4": ["kriti jha"]}
+
