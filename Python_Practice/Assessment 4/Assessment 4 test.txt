@@ -1,0 +1,173 @@
+# Query Execution
+
+import logging
+import pymysql
+
+db=pymysql.connect("localhost","root","root","pyass")
+cursor=db.cursor()
+logging.basicConfig(filename="logfile.log", filemode='a',
+                            format='%(asctime)s - %(message)s',
+                            datefmt='%y-%m-%d %H:%M:%S',
+                            level=logging.INFO)
+logging.info("Database Connected")
+class pdt_details():
+
+    def min_sold_pdt(self): #Query Print maximum - sold product with product details
+        print("id \t product_name \t product_code \t price")
+        sql=" select id,product_name,product_code,price from (select p.id,p.product_name,p.product_code,p.price, rank() over (order by s.product_quantity) r from product p inner join sale s on p.id=s.id)t where r=1;"
+        cursor.execute(sql)
+        r=cursor.fetchall()
+        for i in r:
+            print(i)
+            logging.info("minimum sold product found")
+        print("done")
+
+    def max_sold_pdt(self): #Query Print minimum - sold product with product details
+        print("id \t product_name \t product_code \t price")
+        sql=" select id,product_name,product_code,price from (select p.id,p.product_name,p.product_code,p.price, rank() over (order by s.product_quantity desc) r from product p inner join sale s on p.id=s.id)t where r=1;"
+        cursor.execute(sql)
+        r=cursor.fetchall()
+        for i in r:
+            print(i)
+            logging.info("maximum sold product found")
+        print("done")
+
+    def pdt_code(self,user_inp): # Query Get the product code from user and check it in product table
+        logging.info("User queried product code is %s",user_inp,)
+        try:
+            cursor.execute("select product_name,product_code,price from product p where product_code=%s", (user_inp))
+            r = cursor.fetchall()
+            if len(r)==0:
+                print("Product code not found")
+                logging.info("no result found for given product_code")
+            else:
+                for i in r:
+                    print(i)
+                    logging.info("User queried product found")
+        except :
+            print("Connectivity Issue")
+
+    def bill_date(self,user_inp): #Query Get the billing date from user and print the product details and total amount of displaying products
+        user_inp=input("Enter the bill date:")
+        logging.info("User queried bill date is %s",user_inp,)
+        try:
+            cursor.execute("select product_name,product_code,price,s.product_quantity*p.price as total_amount from product p join sale s on p.id=s.id where s.bill_date=%s", (user_inp,))
+            r = cursor.fetchall()
+            if len(r)==0:
+                print("Billing date not found")
+                logging.info("no result found for given billing date")
+            else:
+                for i in r:
+                    print(i)
+                    logging.info("User queried product found")
+        except :
+            print("Connectivity Issue")
+
+user_pdt_code=input("Enter the product code:")
+user_bill_date=input("Enter the bill date:")
+pdt=pdt_details()
+pdt.min_sold_pdt()
+pdt.max_sold_pdt()
+pdt.pdt_code(user_pdt_code)
+pdt.bill_date(user_bill_date)
+
+db.close()
+
+#Output:
+#Query Print maximum - sold product with product details
+#
+#id 	 product_name 	 product_code 	 price
+#(2, 'YAMAHA Speakers', 'YHT-1840', 26500)
+#done
+#
+#Query Print minimum - sold product with product details
+#
+#id 	 product_name 	 product_code 	 price
+#(3, 'JBL Speakers', 'JBL-100', 18600)
+#done
+#
+#Query Get the product code from user and check it in product table
+#
+#Enter the product code:YHT-1840
+#('YAMAHA Speakers', 'YHT-1840', 26500)
+#
+#Query Get the billing date from user and print the product details and total amount of displaying products
+#
+#Enter the bill date:2019-05-10
+#('SONY LED TV', 'SONY-LED-S43', 58300, 116600)
+#
+#
+#
+#
+##########################################################################################
+
+#Inserting values to product table
+
+import pymysql
+import csv
+db=pymysql.connect("localhost","root","root","pyass")
+cursor=db.cursor()
+f=open("product.csv","r")
+r=csv.reader(f)
+for record in r:
+    print(record)
+    cursor.execute("insert into product (id,product_name,product_code,price) values (%s,%s,%s,%s)",record)
+    db.commit()
+db.close()
+
+#select * from product;
+#+------+-----------------+--------------+-------+
+#| id   | product_name    | product_code | price |
+#+------+-----------------+--------------+-------+
+#|    1 | SONY LED TV     | SONY-LED-S43 | 58300 |
+#|    2 | YAMAHA Speakers | YHT-1840     | 26500 |
+#|    3 | JBL Speakers    | JBL-100      | 18600 |
+#+------+-----------------+--------------+-------+
+
+################################################################################################
+
+#Inserting values to sale table
+
+import pymysql
+import csv
+
+db=pymysql.connect("localhost","root","root","pyass")
+cursor=db.cursor()
+f=open("sale.csv","r")
+r=csv.reader(f)
+for record in r:
+    print(record)
+    cursor.execute("insert into sale (id,bill_date,product_id,product_quantity) values (%s,%s,%s,%s)",record)
+    db.commit()
+	
+#select * from sale;
+#+------+------------+------------+------------------+
+#| id   | bill_date  | product_id | product_quantity |
+#+------+------------+------------+------------------+
+#|    1 | 2019-05-10 |          1 |                2 |
+#|    2 | 2020-01-01 |          3 |                4 |
+#|    3 | 2020-02-03 |          2 |                1 |
+#+------+------------+------------+------------------+
+#	
+##################################################################################################
+
+#Query: Add products to table product
+
+import pymysql
+
+db=pymysql.connect("localhost","root","root","pyass")
+cursor=db.cursor()
+sql="insert into product values (4,'skull candy',4573,7000)"
+cursor.execute(sql)
+db.commit()
+db.close()
+
+# select * from product;
+#+------+-----------------+--------------+-------+
+#| id   | product_name    | product_code | price |
+#+------+-----------------+--------------+-------+
+#|    1 | SONY LED TV     | SONY-LED-S43 | 58300 |
+#|    2 | YAMAHA Speakers | YHT-1840     | 26500 |
+#|    3 | JBL Speakers    | JBL-100      | 18600 |
+#|    4 | skull candy     | 4573         |  7000 |
+#+------+-----------------+--------------+-------+
