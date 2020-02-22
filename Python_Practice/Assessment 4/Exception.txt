@@ -1,0 +1,93 @@
+import datetime
+
+
+class bookAuthor_Error(Exception):
+    def __init__(self, id, author):
+        self.id = id
+        self.author = author
+
+
+class ReturnDateError(Exception):
+    def __init__(self, date, id):
+        self.date = date
+        self.id = id
+
+
+try:
+    book_name = input("Enter the book name:")
+    if book_name == "":  # raises NameError when no book name is entered
+        raise NameError("Entered book name does not exist")
+    else:
+        book_id = int(
+            input("Enter book id:"))  # when entered book id is not digit then raises ValueError
+        author = input("Enter Author name:")
+        if author.isalpha() != True:
+            raise bookAuthor_Error(book_id,
+                                   author)  # when entered author name  is alphabetic or alphanumeric then raises user defined bookAuthor_Error
+        else:
+            now_date = datetime.datetime.now()  # getting the current date time
+            date_today = datetime.datetime.strftime(now_date, "%Y/%m/%d") # getting only current date
+            date1 = input("Enter the date(yyy/mm/dd) you borrowed the book:") 
+            borrowed = datetime.datetime.strptime(date1, "%Y-%m-%d") # converting entered string date to date
+            delta = now_date - borrowed # subtracting the dates
+            print("Book borrowed for", delta.days) 
+            if delta.days > 15:
+                raise ReturnDateError(date1, book_id) # if number of days is more than 15 then raises User defined ReturnDateError
+            else:
+                print("You can return the book with no fine")
+                f = open("bookid.txt", "r")
+
+except NameError as e:
+    print(e)
+except ValueError:
+    print("book id should be only integers")
+except bookAuthor_Error as e:
+    print("author name:", e.author, " for book id:", e.id, " is not correct")
+except ReturnDateError as e:
+    print("you have to pay fine of Rs.10 since you borrowed the book with id", e.id, "more than 15 days")
+except FileNotFoundError:
+    print("File not found")
+
+
+Input:
+Enter the book name:Harry Potter
+Enter book id:wej
+
+Output:
+book id should be only integers
+
+Input:
+Enter the book name:
+
+Output:
+Entered book name does not exist
+
+Input:
+Enter the book name:Famous Five
+Enter book id:123
+Enter Author name:kqefh
+Enter the date(yyy/mm/dd) you borrowed the book:2020-01-05
+
+Output:
+Book borrowed for 48
+you have to pay fine of Rs.10 since you borrowed the book with id 123 more than 15 days
+
+Input:
+Enter the book name:efj
+Enter book id:123
+Enter Author name:124wjf
+
+Output:
+author name: 124wjf  for book id: 123  is not correct
+
+Input:
+Enter the book name:wdven
+Enter book id:2314
+Enter Author name:wdfj
+Enter the date(yyy/mm/dd) you borrowed the book:2020-02-10
+
+Output:
+Book borrowed for 12
+You can return the book with no fine
+File not found
+
