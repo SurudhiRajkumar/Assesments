@@ -25,7 +25,7 @@ try:
         else:
             now_date = datetime.datetime.now()  # getting the current date time
             date_today = datetime.datetime.strftime(now_date, "%Y/%m/%d") # getting only current date
-            date1 = input("Enter the date(yyy/mm/dd) you borrowed the book:") 
+            date1 = input("Enter the date(yyyy-mm-dd) you borrowed the book:") 
             borrowed = datetime.datetime.strptime(date1, "%Y-%m-%d") # converting entered string date to date
             delta = now_date - borrowed # subtracting the dates
             print("Book borrowed for", delta.days) 
@@ -64,7 +64,7 @@ Input:
 Enter the book name:Famous Five
 Enter book id:123
 Enter Author name:kqefh
-Enter the date(yyy/mm/dd) you borrowed the book:2020-01-05
+Enter the date(yyyy-mm-dd) you borrowed the book:2020-01-05
 
 Output:
 Book borrowed for 48
@@ -82,7 +82,7 @@ Input:
 Enter the book name:wdven
 Enter book id:2314
 Enter Author name:wdfj
-Enter the date(yyy/mm/dd) you borrowed the book:2020-02-10
+Enter the date(yyyy-mm-dd) you borrowed the book:2020-02-10
 
 Output:
 Book borrowed for 12
