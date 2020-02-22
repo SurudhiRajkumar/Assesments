@@ -28,7 +28,7 @@ try:
             date1 = input("Enter the date(yyyy-mm-dd) you borrowed the book:") 
             borrowed = datetime.datetime.strptime(date1, "%Y-%m-%d") # converting entered string date to date
             delta = now_date - borrowed # subtracting the dates
-            print("Book borrowed for", delta.days) 
+            print("Book borrowed for", delta.days,"days") 
             if delta.days > 15:
                 raise ReturnDateError(date1, book_id) # if number of days is more than 15 then raises User defined ReturnDateError
             else:
@@ -67,7 +67,7 @@ Enter Author name:kqefh
 Enter the date(yyyy-mm-dd) you borrowed the book:2020-01-05
 
 Output:
-Book borrowed for 48
+Book borrowed for 48 days
 you have to pay fine of Rs.10 since you borrowed the book with id 123 more than 15 days
 
 Input:
@@ -85,7 +85,7 @@ Enter Author name:wdfj
 Enter the date(yyyy-mm-dd) you borrowed the book:2020-02-10
 
 Output:
-Book borrowed for 12
+Book borrowed for 12 days
 You can return the book with no fine
 File not found
 
