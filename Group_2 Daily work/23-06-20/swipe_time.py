@@ -1,5 +1,10 @@
 import pymysql
 
+''' input: Enter the year(2018/2019):2018
+    output:
+    (101, 11, 7.6333)
+    (101, 12, 7.0968)
+''' 
 
 class AverageSwipeTime:
     def __init__(self):
